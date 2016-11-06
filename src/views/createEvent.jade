@@ -1,0 +1,28 @@
+﻿extends layout
+
+block content
+	.container
+		h1 Create new activity
+		p.lead Say something worthwhile here.
+		br
+		form(role='form', action="/events/createEvent", method="post", style='max-width: 300px;', encType="multipart/form-data")
+			.form-group
+				input.form-control(type='text', name="title", placeholder='Enter title', required)
+			.form-group
+				input.form-control(type='text', name="description", placeholder='Activity description', required)
+			.form-group
+				select.form-control(name='city')
+					each city, i in cities
+						option(value=city) #{city}
+			.form-group
+				input.form-control(type='text', name="location", placeholder='Place')
+			.form-group
+				input.form-control(type='text', name="date", placeholder='YYYY-MM-DD', required)
+			.form-group
+				input.form-control(type='text', name="hour", placeholder='hh:mm:ss', required)
+			.form-group
+				input.form(type='file', name="image")
+			button.btn.btn-default(type='submit') Submit
+	&nbsp;
+	a(href='/')
+		button.btn.btn-primary(type="button") Cancel

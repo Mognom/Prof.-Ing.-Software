@@ -1,0 +1,46 @@
+﻿extends layout
+
+block content
+	p Welcome 
+
+	if (!user)
+		h1 Log In
+		.container
+			form(role='form', action="/login",method="post", style='max-width: 300px;')
+				.form-group
+					input.form-control(type='text', name="username", placeholder='Enter Username')
+				.form-group
+					input.form-control(type='password', name="password", placeholder='Password')
+				button.btn.btn-default(type='submit') Submit
+		a(href='/')
+			button.btn.btn-primary(type="button") Cancel
+		br
+		br
+		h1 Sign Up
+		.container
+			form(role='form', action="/signup",method="post", style='max-width: 300px;', encType="multipart/form-data")
+				.form-group
+					input.form-control(type='text', name="username", placeholder='Enter Username', required)
+				.form-group
+					input.form-control(type='password', name="password", placeholder='Password', required)
+				.form-group
+					input.form-control(type='password', name="repeatPassword", placeholder='Rewrite the password', required)
+				.form-group
+					input.form-control(type='number', name="age", placeholder='Age', required)
+				.form-group
+					input.form-control(type='text', name="gender", placeholder='Man/Female', required)
+				.form-group
+					input.form-control(type='email', name="email", placeholder='example@domain.com', required)
+				.form-group
+					input.form(type='file', name="image")
+				button.btn.btn-default(type='submit') Submit
+		a(href='/')
+			button.btn.btn-primary(type="button") Cancel
+		br
+	if (user)
+		p You are currently logged in as #{user.username}
+		a(href="/logout") Logout
+		br
+		a(href="/events") See events
+		br
+		a(href="/events/createEvent") Create event
