@@ -5,3 +5,7 @@ exports.hash = function (toHash) {
     hash.update(toHash);
     return hash.digest('hex');
 }
+
+exports.getImagesUrl = function (request) {
+    return (request.protocol + '://' + request.get('host') + '/images/')
+}

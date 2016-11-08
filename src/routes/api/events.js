@@ -4,6 +4,7 @@ const passport = require('passport');
 const appRootPath = require('app-root-path');
 const db = require(appRootPath + '/db.js');
 const errorHandler = require(appRootPath + '/errorHandler.js');
+const utils = require(appRootPath + '/utils.js');
 
 router.get('/', passport.authenticationMiddleware(), function (req, res) {
 
@@ -18,6 +19,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
             return db.getEventByCity(city);
         }
     })().then(function (rows) {
+            rows.map((event) => { event.image = utils.getImagesUrl(req) + event.image });
             res.send(rows);
         })
         .catch(function (err) {
