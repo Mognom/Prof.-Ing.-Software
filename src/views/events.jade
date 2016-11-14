@@ -2,4 +2,14 @@
 
 block content
 	.container
-		
+		if (events)
+			each event in events
+				.event
+					.thumbnail
+						img.img-responsive(src='http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png')          
+						.caption
+						h3 #{event.title}
+						p #{event.description}
+
+		if (!events)
+			p No events found
