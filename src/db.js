@@ -7,13 +7,13 @@ const db = new sqlite3.Database(config.sqlite3.filename);
 
 exports.getAllCities = function () {
     return all(db, 'SELECT name FROM city')
-}
+};
 
 exports.getCity = function (name) {
     return get(db, 'SELECT name FROM city WHERE name = $name', {
         $name: name
     })
-}
+};
 
 exports.getUserByCredentials = function (username, password) {
     var hash = utils.hash(password);
@@ -22,7 +22,7 @@ exports.getUserByCredentials = function (username, password) {
         $username: username,
         $hash: hash
     })
-}
+};
 
 exports.getUserByID = function (id) {
     return get(db, 'SELECT id, username FROM user WHERE id=$id', {
@@ -68,13 +68,20 @@ exports.createEvent = function (ownerID, title, description, city, location, dat
 
 exports.getAllEvents = function () {
     return all(db, 'SELECT * FROM event')
-}
+};
 
 exports.getEventByCity = function (city) {
     return all(db, 'SELECT * FROM event WHERE city = $city', {
         $city: city
     })
-}
+};
+
+exports.getEventById = function (id) {
+    "use strict";
+    return all(db, 'SELECT * FROM event WHERE id = $id', {
+        $id: id
+    })
+};
 
 exports.init = function (callback) {
     async.series([
