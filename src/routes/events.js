@@ -11,7 +11,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
     db.getAllEvents()
         .then(function (events) {
             if (events) {
-                res.render('events', events);
+                res.render('events', {events: events});
             }
         })
         .catch(function (err) {
