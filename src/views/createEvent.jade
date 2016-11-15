@@ -2,27 +2,36 @@
 
 block view
 	.container
-		h1 Create new activity
-		p.lead Say something worthwhile here.
-		br
-		form(role='form', action="/events/createEvent", method="post", style='max-width: 300px;', encType="multipart/form-data")
-			.form-group
-				input.form-control(type='text', name="title", placeholder='Enter title', required)
-			.form-group
-				input.form-control(type='text', name="description", placeholder='Activity description', required)
-			.form-group
-				select.form-control(name='city')
-					each city, i in cities
-						option(value=city) #{city}
-			.form-group
-				input.form-control(type='text', name="location", placeholder='Place')
-			.form-group
-				input.form-control(type='text', name="date", placeholder='YYYY-MM-DD', required)
-			.form-group
-				input.form-control(type='text', name="hour", placeholder='hh:mm:ss', required)
-			.form-group
-				input.form(type='file', name="image")
-			button.btn.btn-default(type='submit') Submit
-	&nbsp;
-	a(href='/')
-		button.btn.btn-primary(type="button") Cancel
+		.section(style="width: 30%; margin: auto;")
+			.container
+				h1 Create new activity
+		.container
+			form(role='form', action="/events/createEvent", method="post", style='max-width: 300px;margin:auto', encType="multipart/form-data")
+				.form-group
+					label.control-label Title
+					input.form-control(placeholder='My Event', type='text', name="title")
+				.form-group
+					label.control-label Description
+					input.form-control(type='text', placeholder='Funny description', name="description")
+				.form-group
+					label.control-label Select
+					select.form-control(name="city")
+						each city, i in cities
+							option(value=city) #{city}
+				.form-group
+					label.control-label Text input
+					input.form-control(type='text', placeholder='At the park', name="location")
+				.form-group
+					label.control-label Text input
+					input.form-control(type='text', placeholder='YYYY-MM-DD', name="date")
+				.form-group
+					label.control-label Text input
+					input.form-control(type='text', placeholder='HH-MM', name="hour")
+				.form-group
+					label.control-label Image
+					input.form(type='file', name="image")
+				.section
+					.container
+						button.btn.btn-default(style="margin-right: 10%", type='submit') Submit
+						a(href='/')
+							button.btn.btn-primary(type="button") Cancel
