@@ -4,6 +4,7 @@
 * [Deployment](#deployment)
 	* [Software requiremnts](#softwarerequirements)
 	* [Installation](#installation)
+	* [Configuration](#configuration)
 	* [Run](#Run)
 * [API](#api)
 
@@ -20,6 +21,18 @@ Eventus is a web application designed to create and share events in your city.
 To install NodeJS dependencies, execute in the accounting-proxy folder:
 ```{bash}
 npm install
+```
+
+### <a name="configuration"/> Configuration:
+
+You can edit the configuration just editing the file /src/config.js. This file includes:
+```
+multer: {
+	imgdest: "The path where the application is goint to store the images"
+},
+sqlite3: {
+	filename: "The name of the SQLite3 file (By default ./database.sqlite3)"
+}
 ```
 
 ### <a name="run"/> Run:
