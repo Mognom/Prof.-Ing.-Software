@@ -11,7 +11,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
     db.getAllEvents()
         .then(function (events) {
             if (events) {
-                res.render('events', {events: events});
+                res.render('events', {user: req.user, events: events});
             }
         })
         .catch(function (err) {
@@ -22,7 +22,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
 router.get('/createEvent', passport.authenticationMiddleware(), function (req, res) {
     db.getAllCities()
         .then(function (cities) {
-            res.render('createEvent', { cities: cities.map((city) => { return city.name }) });
+            res.render('createEvent', {user: req.user, cities: cities.map((city) => { return city.name }) });
         })
         .catch(function (err) {
             errorHandler.serverError(err, req, res, 'Error gettings events');
@@ -31,13 +31,13 @@ router.get('/createEvent', passport.authenticationMiddleware(), function (req, r
 
 router.post('/createEvent', multer.imageUpload.single('image'),
     passport.authenticationMiddleware(), function (req, res) {
-	(function* () {
-		if (req.file) {
-			db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, req.file.filename)
-		} else {
-			db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, undefined)
-		}
-	}).then(() => {
+    co(function* () {
+        if (req.file) {
+            db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, req.file.filename)
+        } else {
+            db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, undefined)
+        }
+    }).then(() => {
             res.redirect('/');
         })
         .catch(function (err) {

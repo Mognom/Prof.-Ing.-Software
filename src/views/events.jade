@@ -1,15 +1,16 @@
-﻿extends layout
+﻿extends header
 
-block content
+block view
 	.container
 		if (events)
 			each event in events
 				.event
 					.thumbnail
-						img.img-responsive(src='http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png')          
+						a(href='#{"/events/" + event.id}')
+							img.img-responsive(src='#{ event.image || "media/noimage.jpg"}')
 						.caption
-						h3 #{event.title}
-						p #{event.description}
+							h3 #{event.title}
+							p #{event.description}
 
 		if (!events)
 			p No events found

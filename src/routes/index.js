@@ -21,11 +21,11 @@ router.post('/signup', multer.imageUpload.single('image'), function (req, res) {
                 error: { status: 400 }
             });
         } else {
-			if (req.file) {
-				yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email, req.file.filename);
-			} else {
-				yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email, undefined);
-			}
+            if (req.file) {
+                yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email, req.file.filename);
+            } else {
+                yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email, undefined);
+            }
         }
     }).then(() => {
         passport.authenticate('local')(req, res, function () {

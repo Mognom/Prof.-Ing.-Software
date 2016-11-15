@@ -1,0 +1,64 @@
+﻿extends layout
+
+block content
+	if (!user)
+		nav.navbar.navbar-inverse.navbar-fixed-top
+			.container
+				.navbar-header
+					button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")        
+					a.navbar-brand(href="/", style="font-family: Pacifico; font-size: 30px;color: white") Eventus     
+				#navbar.navbar-collapse.collapse
+					form.navbar-form.navbar-right(role='form', action="/login", method="post")
+						.form-group
+							input.form-control(type='text', name="username", placeholder='Enter Username')
+						|        
+						.form-group
+							input.form-control(type='password', name="password", placeholder='Password')
+						|            
+						button.btn.btn-success(type="submit") Sign in
+
+		.container(style="margin-top:3%")
+			center
+				h1 Sign up
+				h4 It's free and always will be
+				br
+				form(role='form', action="/signup",method="post", style='max-width: 300px; text-align: left', encType="multipart/form-data")
+					.form-group
+						input.form-control(type='text', name="username", placeholder='Enter Username', required)
+					.form-group
+						input.form-control(type='password', name="password", placeholder='Password', required)
+					.form-group
+						input.form-control(type='password', name="repeatPassword", placeholder='Rewrite the password', required)
+					.form-group
+						input.form-control(type='number', name="age", placeholder='Age', required)
+					.form-group
+						input.form-control(type='text', name="gender", placeholder='Man/Female', required)
+					.form-group
+						input.form-control(type='email', name="email", placeholder='example@domain.com', required)
+					.form-group
+						input.form(type='file', name="image")
+					|         
+					button.btn.btn-lg.btn-primary.btn-block(type="submit") Sign up
+	if (user)
+		nav.navbar.navbar-inverse.navbar-fixed-top
+			.container
+				.navbar-header
+					button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")     
+					a.navbar-brand(href="/", style="font-family: Pacifico; font-size: 30px;color: white") Eventus  
+				|         
+				#navbar.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li
+							a(href="/") Home
+						|             
+						li
+							a(href="/events") Events
+						|             
+						li
+							a(href="/events/createEvent") Create event
+					ul.nav.navbar-nav.navbar-right
+						li
+							a(href="/logout") #{user.username} (Log out)
+		block view
+
+						

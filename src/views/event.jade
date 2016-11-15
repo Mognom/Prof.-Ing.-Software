@@ -1,29 +1,24 @@
-﻿extends layout
+﻿extends header
 
-block content
+block view
 	.container
-		if (events)
-			each event in events
-				.container
-					.row
-						.col-md-6
-							img.img-responsive(src='http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png')        
-						.col-md-6
-							h1 #{event.title}            
-							.panel.panel-primary
-								.panel-heading
-									h3.panel-title What?            
-								.panel-body
-									p(contenteditable='true') #{event.description}
-							.panel.panel-primary
-								.panel-heading
-									h3.panel-title Where?
-								.panel-body
-									p #{event.city + ", " + event.location}
-							.panel.panel-primary
-								.panel-heading
-									h3.panel-title When?
-								.panel-body
-									p #{event.date + " at " + event.hour}
-		if (!events)
-			p No events found
+		.row
+			.col-md-6
+				img.img-responsive(src='#{ event.image || "media/noimage.jpg"}')
+			.col-md-6
+				h1 #{event.title}
+				.panel.panel-primary
+					.panel-heading
+						h3.panel-title What?
+					.panel-body
+						p(contenteditable='true') #{event.description}
+				.panel.panel-primary
+					.panel-heading
+						h3.panel-title Where?
+					.panel-body
+						p #{event.city + ", " + event.location}
+				.panel.panel-primary
+					.panel-heading
+						h3.panel-title When?
+					.panel-body
+						p #{event.date + " at " + event.hour}
