@@ -31,13 +31,13 @@ router.get('/createEvent', passport.authenticationMiddleware(), function (req, r
 
 router.post('/createEvent', multer.imageUpload.single('image'),
     passport.authenticationMiddleware(), function (req, res) {
-	co(function* () {
-		if (req.file) {
-			db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, req.file.filename)
-		} else {
-			db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, undefined)
-		}
-	}).then(() => {
+    co(function* () {
+        if (req.file) {
+            db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, req.file.filename)
+        } else {
+            db.createEvent(req.user.id, req.body.title, req.body.description, req.body.city, req.body.location, req.body.date, req.body.hour, undefined)
+        }
+    }).then(() => {
             res.redirect('/');
         })
         .catch(function (err) {
