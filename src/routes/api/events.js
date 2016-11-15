@@ -28,7 +28,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
 });
 
 router.get('/:id', passport.authenticationMiddleware(), (req,res)=>{
-    let id = req.params.id;
+    var id = req.params.id;
     res.contentType('application/json');
 
     return db.getEventById(id).then(
