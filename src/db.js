@@ -1,7 +1,7 @@
 ﻿const appRootPath = require('app-root-path');
 const utils = require(appRootPath + '/utils.js');
 const sqlite3 = require('sqlite3');
-const config = require(appRootPath + '/config.js')
+const config = require('./config.js');
 const async = require('async');
 const db = new sqlite3.Database(config.sqlite3.filename);
 

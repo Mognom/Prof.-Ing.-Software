@@ -1,3 +1,6 @@
+#Ignore styles.css
+src/public/stylesheets/style.css
+
 #Ignore DB
 /src/database.sqlite3
 
@@ -40,4 +43,4 @@ jspm_packages
 .node_repl_history
 
 # IDEA
-.idea/
+.idea
