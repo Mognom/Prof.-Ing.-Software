@@ -7,7 +7,7 @@ block view
 				.event
 					.thumbnail
 						a(href='#{"/events/" + event.id}')
-							img.img-responsive(src='http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png')          
+							img.img-responsive(src='#{ event.image || "media/noimage.jpg"}')
 						.caption
 							h3 #{event.title}
 							p #{event.description}
