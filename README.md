@@ -57,12 +57,12 @@ Url: http://localhost:8000/events
 
 Body:
 {
-title: "Title of the event",
-description: "Description of the event",
-city: "City",
-location: "Place",
-date: "YYYY-MM-DD",
-hour: "hh:mm:ss"
+"title": "Title of the event",
+"description": "Description of the event",
+"city": "City",
+"location": "Place",
+"date": "YYYY-MM-DD",
+"hour": "hh:mm:ss"
 }
 ```
 
