@@ -27,7 +27,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
         });
 });
 
-router.get('/:id', passport.authenticationMiddleware(), (req,res)=>{
+router.get('/:id', passport.authenticationMiddleware(), (req,res) => {
     var id = req.params.id;
     res.contentType('application/json');
 

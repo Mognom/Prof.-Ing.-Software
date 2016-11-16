@@ -1,6 +1,9 @@
 #Ignore DB
 /src/database.sqlite3
 
+#Ignore user images
+src/public/images/*
+
 # Logs
 logs
 *.log

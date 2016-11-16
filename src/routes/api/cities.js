@@ -21,7 +21,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
             res.send(rows);
         })
         .catch(function (err) {
-            errorHandler.serverError(err, req, res, 'Error gettings cities');
+            errorHandler.serverError(err, req, res, 'Error getting cities');
         });
 });
 
