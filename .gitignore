@@ -44,3 +44,9 @@ jspm_packages
 
 # IDEA
 .idea
+
+# Ignore Images
+**/*.jpg
+~**/index.jpg
+~**/noimage.jpg
+~**/nouserimage.jpg
