@@ -1,7 +1,7 @@
 ﻿const appRootPath = require('app-root-path');
 const utils = require(appRootPath + '/utils.js');
 const sqlite3 = require('sqlite3');
-const config = require(appRootPath + '/config.js')
+const config = require('./config.js');
 const async = require('async');
 const db = new sqlite3.Database(config.sqlite3.filename);
 
@@ -50,8 +50,6 @@ exports.createUser = function (username, password, age, gender, email, image) {
 };
 
 exports.createEvent = function (ownerID, title, description, city, location, date, hour, image) {
-    location = location ? location : null;
-    image = image ? image : null;
 
     return run(db, 'INSERT INTO event (ownerID, title, description, city, location, date, hour, image) \
         VALUES ($ownerID, $title, $description, $city, $location, $date, $hour, $image)', {
@@ -59,10 +57,10 @@ exports.createEvent = function (ownerID, title, description, city, location, dat
         $title: title,
         $description: description,
         $city: city,
-        $location: location,
+        $location: location || null,
         $date: date,
         $hour: hour,
-        $image: image
+        $image: image || null
     })
 };
 

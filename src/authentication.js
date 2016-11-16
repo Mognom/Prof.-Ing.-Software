@@ -18,7 +18,7 @@ exports.init = function () {
                     return done(err)
                 });
         }
-    ))
+    ));
 
     passport.serializeUser(function (user, done) {
         return done(null, user.id);

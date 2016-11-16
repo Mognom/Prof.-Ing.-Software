@@ -1,5 +1,5 @@
 ﻿const appRootPath = require('app-root-path');
-const config = require(appRootPath + '/config.js')
+const config = require(appRootPath + '/config.js');
 const utils = require(appRootPath + '/utils.js');
 const multer = require('multer');
 const fs = require('fs');
@@ -11,9 +11,9 @@ var imageStorage = multer.diskStorage({
         cb(null, dest)
     },
     filename: function (req, file, cb) {
-        cb(null, (utils.hash(file.originalname) + '-' + Date.now()))
+        cb(null, (utils.hash(file.originalname) + '_' + Date.now() + '.jpg'))
     }
-})
+});
 
 exports.imageUpload = multer({ storage: imageStorage })
 
