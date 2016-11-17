@@ -28,7 +28,8 @@ router.get('/:id', passport.authenticationMiddleware(), (req,res) => {
     res.contentType('application/json');
 
     return db.getEventById(id).then(
-        (event)=>{
+        (event) => {
+            event[0].image = utils.getImagesUrl(req) + event[0].image;
             res.send(event);
         }).catch((err)=>{
             errorHandler.serverError(err,req,res, 'Error getting the event');

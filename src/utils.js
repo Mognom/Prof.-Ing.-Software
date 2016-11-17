@@ -11,5 +11,5 @@ exports.getHostUrl = function (request) {
 };
 
 exports.getImagesUrl = function (request) {
-    return (request.protocol + '://' + request.get('host') + '/images/')
+    return (request.protocol + '://' + request.get('host') + '/')
 };
