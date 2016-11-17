@@ -14,9 +14,9 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
 
     (function () {
         return city ? db.getEventByCity(city) : db.getAllEvents();
-    })().then(function (rows) {
-            rows.map((event) => { if(event.image) { event.image = utils.getImagesUrl(req) + event.image } });
-            res.send(rows);
+    })().then(function (events) {
+            events.map((event) => { if(event.image) { event.image = utils.getHostUrl(req) + event.image } });
+            res.send(events);
         })
         .catch(function (err) {
             errorHandler.serverError(err, req, res, 'Error gettings events');
@@ -29,7 +29,7 @@ router.get('/:id', passport.authenticationMiddleware(), (req,res) => {
 
     return db.getEventById(id).then(
         (event) => {
-            event[0].image = utils.getImagesUrl(req) + event[0].image;
+            if(event[0].image) { event[0].image = utils.getHostUrl(req) + event[0].image };
             res.send(event);
         }).catch((err)=>{
             errorHandler.serverError(err,req,res, 'Error getting the event');

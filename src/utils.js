@@ -7,9 +7,5 @@ exports.hash = function (toHash) {
 };
 
 exports.getHostUrl = function (request) {
-    return (request.protocol + '://' + request.get('host'))
-};
-
-exports.getImagesUrl = function (request) {
     return (request.protocol + '://' + request.get('host') + '/')
 };
