@@ -46,14 +46,10 @@ jspm_packages
 .node_repl_history
 
 # IDEA
-<<<<<<< HEAD
 .idea/
-=======
-.idea
 
 # Ignore Images
 **/*.jpg
 ~**/index.jpg
 ~**/noimage.jpg
 ~**/nouserimage.jpg
->>>>>>> b4900e6abe8eca31cd6670718abcea89982ec703

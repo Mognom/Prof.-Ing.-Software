@@ -49,6 +49,19 @@ exports.createUser = function (username, password, age, gender, email, image) {
     })
 };
 
+exports.getOauthUserByID = function (id) {
+    return get(db, 'SELECT id, username FROM oauth WHERE id=$id', {
+        $id: id
+    })
+};
+
+exports.createOauthUser = function (id, username) {
+    return run(db, 'INSERT INTO oauth (id, username) VALUES ($id, $username)', {
+        $id: id,
+        $username: username
+    })
+};
+
 exports.createEvent = function (ownerID, title, description, city, location, date, hour, image) {
 
     return run(db, 'INSERT INTO event (ownerID, title, description, city, location, date, hour, image) \
@@ -121,6 +134,12 @@ exports.init = function (callback) {
                         PRIMARY KEY (userID, activityID), \
                         FOREIGN KEY (userID) REFERENCES user (id) ON DELETE CASCADE,\
                         FOREIGN KEY (activityID) REFERENCES event (id) ON DELETE CASCADE\
+                    )', callback)
+        },
+        function (callback) {
+            db.run('CREATE TABLE IF NOT EXISTS oauth ( \
+                        id              TEXT PRIMARY KEY, \
+                        username        TEXT \
                     )', callback)
         },
         function (callback) {

@@ -39,8 +39,8 @@ router.get('/createEvent', passport.authenticationMiddleware(), function (req, r
             res.render('createEvent', {user: req.user, cities: cities.map((city) => { return city.name }) });
         })
         .catch(function (err) {
-            errorHandler.serverError(err, req, res, 'Error gettings events');
-        });     
+            errorHandler.serverError(err, req, res, 'Error getting events');
+        });
 });
 
 router.post('/createEvent', passport.authenticationMiddleware(),

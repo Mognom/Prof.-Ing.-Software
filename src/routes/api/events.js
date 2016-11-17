@@ -15,7 +15,7 @@ router.get('/', passport.authenticationMiddleware(), function (req, res) {
     (function () {
         return city ? db.getEventByCity(city) : db.getAllEvents();
     })().then(function (rows) {
-            rows.map((event) => { event.image = utils.getImagesUrl(req) + event.image });
+            rows.map((event) => { if(event.image) { event.image = utils.getImagesUrl(req) + event.image } });
             res.send(rows);
         })
         .catch(function (err) {

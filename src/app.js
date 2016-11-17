@@ -21,7 +21,7 @@ app.use(require('express-session')({
 }));
 
 app.use(passport.initialize())
-app.use(passport.session()) 
+app.use(passport.session())
 
 authentication.init(app);
 
@@ -38,7 +38,7 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
-app.use('/events', require('./routes/events'),express.static(path.join(__dirname, 'public')));
+app.use('/events', require('./routes/events'), express.static(path.join(__dirname, 'public')));
 app.use('/api/events', require('./routes/api/events'));
 app.use('/api/cities', require('./routes/api/cities'));
 

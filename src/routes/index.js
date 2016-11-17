@@ -36,6 +36,28 @@ router.post('/signup', multer.imageUpload.single('image'), function (req, res) {
     });
 });
 
+router.get('/auth/facebook',
+    passport.authenticate('facebook'),
+    function (req, res) {}
+);
+
+router.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/error' }),
+    function (req, res) {
+        res.redirect('/');
+});
+
+router.get('/auth/twitter',
+    passport.authenticate('twitter'),
+    function(req, res){}
+);
+
+router.get('/auth/twitter/callback',
+    passport.authenticate('twitter', { failureRedirect: '/error' }),
+    function(req, res) {
+        res.redirect('/');
+});
+
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/error'

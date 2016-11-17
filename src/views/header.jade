@@ -5,16 +5,16 @@ block content
 		nav.navbar.navbar-inverse.navbar-fixed-top
 			.container
 				.navbar-header
-					button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")        
-					a.navbar-brand(href="/", style="font-family: Pacifico; font-size: 30px;color: white") Eventus     
+					button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+					a.navbar-brand(href="/", style="font-family: Pacifico; font-size: 30px;color: white") Eventus
 				#navbar.navbar-collapse.collapse
 					form.navbar-form.navbar-right(role='form', action="/login", method="post")
 						.form-group
 							input.form-control(type='text', name="username", placeholder='Enter Username')
-						|        
+						| &nbsp;
 						.form-group
 							input.form-control(type='password', name="password", placeholder='Password')
-						|            
+						| &nbsp;
 						button.btn.btn-success(type="submit") Sign in
 
 		.container(style="margin-top:3%")
@@ -37,28 +37,31 @@ block content
 						input.form-control(type='email', name="email", placeholder='example@domain.com', required)
 					.form-group
 						input.form(type='file', name="image")
-					|         
-					button.btn.btn-lg.btn-primary.btn-block(type="submit") Sign up
+					| &nbsp;
+					button.btn.btn-lg.btn-default.btn-block(type="submit") Sign up
+					| &nbsp;
+					a.btn.btn-lg.btn-primary.btn-block(href="/auth/facebook", role="button") Login with Facebook
+					a.btn.btn-lg.btn-info.btn-block(href="/auth/twitter", role="button") Login with Twitter
 	if (user)
-		nav.navbar.navbar-inverse.navbar-fixed-top
-			.container
-				.navbar-header
-					button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")     
-					a.navbar-brand(href="/", style="font-family: Pacifico; font-size: 30px;color: white") Eventus  
-				|         
-				#navbar.collapse.navbar-collapse
-					ul.nav.navbar-nav
-						li
-							a(href="/") Home
-						|             
-						li
-							a(href="/events") Events
-						|             
-						li
-							a(href="/events/createEvent") Create event
-					ul.nav.navbar-nav.navbar-right
-						li
-							a(href="/logout") #{user.username} (Log out)
-		block view
+		.container(style="margin-bottom:3%")
+			nav.navbar.navbar-inverse.navbar-fixed-top
+				.container
+					.navbar-header
+						button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+						a.navbar-brand(href="/", style="font-family: Pacifico; font-size: 30px;color: white") Eventus
 
-						
+					#navbar.collapse.navbar-collapse
+						ul.nav.navbar-nav
+							li
+								a(href="/") Home
+							| &nbsp;
+							li
+								a(href="/events") Events
+							| &nbsp;
+							li
+								a(href="/events/createEvent") Create event
+							| &nbsp;
+						ul.nav.navbar-nav.navbar-right
+							li
+								a(href="/logout") #{user.username} (Log out)
+		block view
