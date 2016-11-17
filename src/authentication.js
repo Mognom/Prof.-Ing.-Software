@@ -20,58 +20,39 @@ exports.init = function () {
         }
     ));
 
+    function getOauthUser (accessToken, refreshToken, profile, done) {
+        co(function* () {
+            var user = yield db.getOauthUserByID(profile.id);
+
+            if (!user) {
+                user = {
+                    id: profile.id,
+                    username: profile.displayName,
+                };
+
+                yield db.createOauthUser(user.id, user.username)
+            }
+
+            return user;
+        }).then((user) => {
+            return done(null, user);
+        }).catch(function (err) {
+            return done(err);
+        });
+    }
+
     passport.use(new FacebookStrategy({
         clientID: config.oauth.facebook.clientID,
         clientSecret: config.oauth.facebook.clientSecret,
         callbackURL: config.oauth.facebook.callbackURL
-    },
-        function (accessToken, refreshToken, profile, done) {
-            co(function* () {
-                var user = yield db.getOauthUserByID(profile.id);
-
-                if (!user) {
-                    user = {
-                        id: profile.id,
-                        username: profile.displayName,
-                    };
-
-                    yield db.createOauthUser(user.id, user.username)
-                }
-
-                return user;
-            }).then((user) => {
-                return done(null, user);
-            }).catch(function (err) {
-                return done(err);
-            });
-        }
+    }, getOauthUser
     ));
 
     passport.use(new TwitterStrategy({
         consumerKey: config.oauth.twitter.consumerKey,
         consumerSecret: config.oauth.twitter.consumerSecret,
         callbackURL: config.oauth.twitter.callbackURL
-    },
-        function (accessToken, refreshToken, profile, done) {
-            co(function* () {
-                var user = yield db.getOauthUserByID(profile.id);
-
-                if (!user) {
-                    user = {
-                        id: profile.id,
-                        username: profile.displayName,
-                    };
-
-                    yield db.createOauthUser(user.id, user.username)
-                }
-
-                return user;
-            }).then((user) => {
-                return done(null, user);
-            }).catch(function (err) {
-                return done(err);
-            });
-        }
+    }, getOauthUser
     ));
 
     passport.serializeUser(function(user, done) {
