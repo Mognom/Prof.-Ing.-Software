@@ -1,0 +1,46 @@
+extends header
+
+block view
+    .container
+        if success && success.length > 0
+            .alert.alert-success.alert-dismissible.fade-in(role="alert")
+                button.close(type="button" data-dismiss="alert" aria-label="Close")
+                    span(aria-hidden="true") ×
+                p= success
+
+        .section(style="width: 30%; margin: auto;")
+            .container
+                h1 User Profile
+
+        .row
+            .col-md-3
+                img.img-responsive(src='#{user.image || "media/noimage.jpg"}')
+            .col-md-9
+                form(role='form', action="/profile", method="post", style='max-width: 300px;margin:auto', encType="multipart/form-data")
+                    .form-group
+                        label.control-label Username
+                        input.form-control(value='#{user.username}', type='text', name="username", readonly=true)
+                    .form-group
+                        label.control-label Email
+                        input.form-control(type='text', value='#{user.email}', name="email")
+                    .form-group
+                        label.control-label Password
+                        input.form-control(type='password', name="password")
+                    .form-group
+                        label.control-label Repeat Password
+                        input.form-control(type='password', name="repeat_password")
+                    .form-group
+                        label.control-label Age
+                        input.form-control(type='text', value='#{user.age}', name="age")
+                    .form-group
+                        label.control-label Gender
+                        input.form-control(type='text', value='#{user.gender}', name="gender")
+                    .form-group
+                        label.control-label New Profile Picture
+                        input.form(type='file', name="image")
+                    .section
+                        .container
+                            button.btn.btn-default(style="margin-right: 10%", type='submit') Submit
+                            a(href='/')
+                                button.btn.btn-primary(type="button") Cancel
+

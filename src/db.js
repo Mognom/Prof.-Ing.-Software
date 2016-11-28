@@ -36,6 +36,34 @@ exports.getUserByName = function (username) {
     })
 };
 
+exports.modifyUserByIDIfDefined = function (id, password, age, gender, email, image) {
+    var SQL = 'UPDATE user SET ';
+    var SQL_OBJ = {$id: id};
+    if (password) {
+        SQL += 'password=$password, ';
+        SQL_OBJ.$password = utils.hash(password);
+    }
+    if (age) {
+        SQL += 'age=$age, ';
+        SQL_OBJ.$age = age;
+    }
+    if (gender) {
+        SQL += 'gender=$gender, ';
+        SQL_OBJ.$gender = gender;
+    }
+    if (email) {
+        SQL += 'email=$email, ';
+        SQL_OBJ.$email = email;
+    }
+    if (image){
+        SQL += 'image=$image, ';
+        SQL_OBJ.$image = image;
+    }
+
+    SQL = SQL.substring(0, SQL.length - 2)+" WHERE id=$id"; //remove trailing comma
+    return get(db, SQL, SQL_OBJ)
+};
+
 exports.createUser = function (username, password, age, gender, email, image) {
     var hash = utils.hash(password);
 

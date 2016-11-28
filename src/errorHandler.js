@@ -27,7 +27,7 @@
             error: {}
         });
     });
-}
+};
 
 // error handlers
 exports.serverError = function (err, req, res, message) {
@@ -36,7 +36,7 @@ exports.serverError = function (err, req, res, message) {
         message: message,
         error: { status: 500 }
     });
-}
+};
 
 exports.notFoundError = function (err, req, res) {
     console.log(err.stack);
@@ -44,4 +44,4 @@ exports.notFoundError = function (err, req, res) {
         message: 'Not Found',
         error: { status: 400 }
     });
-}
+};

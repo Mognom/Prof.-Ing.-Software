@@ -6,7 +6,9 @@ const db = require(appRootPath + '/db.js');
 const utils = require(appRootPath + '/utils.js');
 const co = require('co');
 const multer = require(appRootPath + '/multer.js');
+const config = require(appRootPath + '/config.js');
 const errorHandler = require(appRootPath + '/errorHandler.js');
+
 
 router.get('/', function (req, res) {
     res.render('index', { user: req.user });
@@ -22,9 +24,10 @@ router.post('/signup', multer.imageUpload.single('image'), function (req, res) {
             });
         } else {
             if (req.file) {
-                yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email, req.file.filename);
+                var image = config.media.public_destination + req.file.filename;
+                yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email, image);
             } else {
-                yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email, undefined);
+                yield db.createUser(req.body.username, req.body.password, req.body.age, req.body.gender, req.body.email);
             }
         }
     }).then(() => {
@@ -67,5 +70,44 @@ router.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
+
+router.get('/profile', passport.authenticationMiddleware(),
+    multer.imageUpload.single("image"), function (req,res) {
+        if (!req.user){
+            res.render('error', {
+                message: 'Unknown user',
+                error: { status: 400 }
+            });
+        }
+        db.getUserByName(req.user.username).then(function (user) {
+            user.image =
+            res.render('profile', {user:user});
+        }).catch(function (err) {
+            res.render('error', {
+                message: 'Unable to render user profile',
+                log: err,
+                error: { status: 400 }
+            });
+        })
+});
+
+router.post('/profile', passport.authenticationMiddleware(),
+    multer.imageUpload.single("image"), function (req,res) {
+        if (!req.user){
+            res.render('error', {
+                message: 'Unknown user',
+                error: { status: 400 }
+            });
+        }
+        var image = req.file ? config.media.public_destination + req.file.filename : null;
+
+        db.modifyUserByIDIfDefined(req.user.id, req.body.password, req.body.age,
+            req.body.gender, req.body.email, image).then(function () {
+            req.flash('success', 'Your profile was updated');
+            return res.redirect('/profile');
+        }).catch(function (err) {
+            return errorHandler.serverError(err, req, res, 'User was not modified');
+        })
+    });
 
 module.exports = router;

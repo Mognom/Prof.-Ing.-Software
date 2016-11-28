@@ -12,6 +12,7 @@ const db = require(appRootPath + '/db.js');
 const authentication = require(appRootPath + '/authentication.js')
 const config = require(appRootPath + '/config.js')
 const errorHandler = require(appRootPath + '/errorHandler.js');
+const flash = require('connect-flash');
 const app = express()
 
 app.use(require('express-session')({
@@ -20,8 +21,15 @@ app.use(require('express-session')({
     saveUninitialized: false
 }));
 
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(flash());
+app.use(function(req, res, next){
+    res.locals.success = req.flash('success');
+    res.locals.errors = req.flash('error');
+    next();
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 authentication.init(app);
 
@@ -41,6 +49,7 @@ app.use('/', require('./routes/index'));
 app.use('/events', require('./routes/events'), express.static(path.join(__dirname, 'public')));
 app.use('/api/events', require('./routes/api/events'));
 app.use('/api/cities', require('./routes/api/cities'));
+app.use('/api/user', require('./routes/api/user'));
 
 errorHandler.init(app);
 
