@@ -60,14 +60,13 @@ router.get('/:id(\\d+)/', passport.authenticationMiddleware(), function (req, re
         var event = yield db.getEventById(req.params.id)
         var comments = yield db.getCommentsByEvent(req.params.id)
         var participate = yield db.getParticipateInEvent(req.params.id, req.user.id)
-console.log(participate);
+
         return {
             event: event[0],
             comments: comments,
             participate: ((participate.length > 0) ? true : false)
         };
     }).then((result) => {
-        console.log(result.participate);
             res.render('event', {user: req.user, event: result.event, comments: result.comments, participate: result.participate});
         })
         .catch(function (err) {
