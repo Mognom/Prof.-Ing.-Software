@@ -24,6 +24,10 @@ exports.getUserByCredentials = function (username, password) {
     })
 };
 
+exports.getAllUsers = function () {
+    return all(db, 'SELECT id, username FROM user')
+};
+
 exports.getUserByID = function (id) {
     return get(db, 'SELECT id, username FROM user WHERE id=$id', {
         $id: id
@@ -112,6 +116,25 @@ exports.getAllEvents = function () {
 exports.getEventByCity = function (city) {
     return all(db, 'SELECT * FROM event WHERE city = $city', {
         $city: city
+    })
+};
+
+exports.getEventByDate = function (date) {
+    return all(db, 'SELECT * FROM event WHERE date = $date', {
+        $date: date
+    })
+};
+
+exports.getEventByOwner = function (owner) {
+    return all(db, 'SELECT * FROM event JOIN (SELECT id FROM user WHERE user.username = $owner) as owner ON event.ownerID = owner.id', {
+        $owner: owner
+    })
+};
+
+exports.getEventByOwnerAndDate = function (owner, date) {
+    return all(db, 'SELECT * FROM event JOIN (SELECT id FROM user WHERE user.username = $owner) as owner ON event.ownerID = owner.id where event.date = $date', {
+        $owner: owner,
+        $date: date
     })
 };
 

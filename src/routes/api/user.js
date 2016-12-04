@@ -1,6 +1,3 @@
-/**
- * Created by gabriel on 28/11/16.
- */
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -23,8 +20,6 @@ router.get('/', passport.authenticationMiddleware(), function(req, res){
     }).catch(function (err) {
         return errorHandler.serverError(err, req, res, 'User was not present in request');
     })
-
-
 });
 
 /**

@@ -3,6 +3,27 @@
 block view
 	.container
 		if (events)
+			form.form-inline(role='form', action="/events/filter", method="post", style='margin-bottom:3%')
+				.form-group
+					#datetimepicker1.input-group.date
+						input.form-control(type='text', placeholder='Date', name="date")
+						|                     
+						span.input-group-addon
+							span.glyphicon.glyphicon-calendar
+					| &nbsp;
+				.form-group
+					select.form-control(name="owner")
+						each user, i in users
+							option(value=user) #{user}
+					| &nbsp;
+				button.btn.btn-primary(type="submit") Filter
+			|         
+			script(type="text/javascript").
+				$(function () {
+				$('#datetimepicker1').datetimepicker({
+				format: 'YYYY-MM-DD'
+				});
+				});
 			each event in events
 				.event
 					.thumbnail

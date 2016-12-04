@@ -1,0 +1,21 @@
+{
+  "name": "eventus",
+  "description": "Eventus",
+  "main": "",
+  "authors": [
+    ""
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Mognom/Prof.-Ing.-Software",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.43"
+  }
+}

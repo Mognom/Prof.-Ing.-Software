@@ -7,19 +7,53 @@ const config = require(appRootPath + '/config.js');
 const multer = require(appRootPath + '/multer.js');
 const co = require('co');
 const errorHandler = require(appRootPath + '/errorHandler.js');
+const querystring = require('querystring');
 
 router.get('/', passport.authenticationMiddleware(), function (req, res) {
-    db.getAllEvents()
-        .then(function (events) {
-            if (events) {
-                res.render('events', {user: req.user, events: events});
-            }
+
+    var date = req.query.date;
+    var owner = req.query.owner == 'All' ? null : req.query.owner;
+
+    co(function* () {
+        var events
+
+        if(owner && date)
+        {
+            events = yield db.getEventByOwnerAndDate(owner, date)
+        }
+        else if(owner)
+        {
+            events = yield db.getEventByOwner(owner)
+        }
+        else if(date)
+        {
+            events = yield db.getEventByDate(date)
+        }
+        else
+        {
+            events = yield db.getAllEvents();
+        }
+
+        var users = yield db.getAllUsers();
+
+        users = users.map((user) => { return user.username })
+        users.unshift("All");
+
+        return {
+            events: events,
+            users: users
+        };
+    }).then((result) => {
+            res.render('events', {user: req.user, events: result.events, users: result.users});
         })
         .catch(function (err) {
             errorHandler.serverError(err, req, res, 'Error getting events');
         });
 });
 
+router.post('/filter', passport.authenticationMiddleware(), function (req, res) {
+    res.redirect('/events?' + querystring.stringify(req.body));
+});
 
 router.get('/:id(\\d+)/', passport.authenticationMiddleware(), function (req, res) {
     db.getEventById(req.params.id)
