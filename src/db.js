@@ -139,9 +139,22 @@ exports.getEventByOwnerAndDate = function (owner, date) {
 };
 
 exports.getEventById = function (id) {
-    "use strict";
     return all(db, 'SELECT * FROM event WHERE id = $id', {
         $id: id
+    })
+};
+
+exports.addCommentToEvent = function (eventID, userID, text) {
+    return run(db, 'INSERT INTO comment (eventID, userID, text) VALUES ($eventID, $userID, $text)', {
+        $eventID: eventID,
+        $userID: userID,
+        $text: text
+    })
+};
+
+exports.getCommentsByEvent = function (eventID) {
+    return all(db, 'SELECT username, text FROM comment JOIN user ON comment.userID = user.id WHERE eventID = $eventID', {
+        $eventID: eventID
     })
 };
 
@@ -179,12 +192,22 @@ exports.init = function (callback) {
                     )', callback);
         },
         function (callback) {
+            db.run('CREATE TABLE IF NOT EXISTS comment ( \
+                        id              INTEGER PRIMARY KEY AUTOINCREMENT, \
+                        userID          INTEGER, \
+                        eventID         INTEGER, \
+                        text            TEXT, \
+                        FOREIGN KEY (userID) REFERENCES user (id) ON DELETE CASCADE,\
+                        FOREIGN KEY (eventID) REFERENCES event (id) ON DELETE CASCADE\
+                    )', callback);
+        },
+        function (callback) {
             db.run('CREATE TABLE IF NOT EXISTS participate ( \
                         userID          INTEGER, \
-                        activityID      INTEGER, \
-                        PRIMARY KEY (userID, activityID), \
+                        eventID         INTEGER, \
+                        PRIMARY KEY (userID, eventID), \
                         FOREIGN KEY (userID) REFERENCES user (id) ON DELETE CASCADE,\
-                        FOREIGN KEY (activityID) REFERENCES event (id) ON DELETE CASCADE\
+                        FOREIGN KEY (eventID) REFERENCES event (id) ON DELETE CASCADE\
                     )', callback)
         },
         function (callback) {

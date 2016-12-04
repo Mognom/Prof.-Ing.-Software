@@ -56,14 +56,29 @@ router.post('/filter', passport.authenticationMiddleware(), function (req, res) 
 });
 
 router.get('/:id(\\d+)/', passport.authenticationMiddleware(), function (req, res) {
-    db.getEventById(req.params.id)
-        .then(function (event) {
-            if (event) {
-                res.render('event', {user: req.user, event: event[0]});
-            }
+    co(function* () {
+        var event = yield db.getEventById(req.params.id)
+        var comments = yield db.getCommentsByEvent(req.params.id)
+
+        return {
+            event: event[0],
+            comments: comments
+        };
+    }).then((result) => {
+            res.render('event', {user: req.user, event: result.event, comments: result.comments});
         })
         .catch(function (err) {
-            errorHandler.serverError(err, req, res, 'Error getting event');
+            errorHandler.serverError(err, req, res, 'Error getting events');
+        });
+});
+
+router.post('/:id(\\d+)/addComment', passport.authenticationMiddleware(), function (req, res) {
+    db.addCommentToEvent(req.params.id, req.user.id, req.body.text)
+        .then(() => {
+            res.redirect('/events/' + req.params.id);
+        })
+        .catch(function (err) {
+            errorHandler.serverError(err, req, res, 'Error creating event');
         });
 });
 

@@ -13,7 +13,7 @@ block view
 					| &nbsp;
 				.form-group
 					select.form-control(name="owner")
-						each user, i in users
+						each user in users
 							option(value=user) #{user}
 					| &nbsp;
 				button.btn.btn-primary(type="submit") Filter

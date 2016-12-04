@@ -22,3 +22,18 @@ block view
 						h3.panel-title When?
 					.panel-body
 						p #{event.date + " at " + event.hour}
+
+		h4 Latest comments & activity
+
+		.list-group
+			each comment in comments
+				a.list-group-item
+					h5.list-group-item-heading #{comment.username}
+					p.list-group-item-text #{comment.text}
+		
+		form(role='form', action="/events/#{event.id}/addComment", method="post")
+			.input-group
+				input.form-control(type="text", placeholder="Enter your comment here...", name="text")
+				|       
+				span.input-group-btn
+					button.btn.btn-default(type='submit') Add comment
