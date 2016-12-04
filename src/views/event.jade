@@ -3,7 +3,7 @@
 block view
 	.container
 		.row
-			.col-md-6
+			.col-md-6(style='margin-top:3%')
 				img.img-responsive(src='#{ event.image || "media/noimage.jpg"}')
 			.col-md-6
 				h1 #{event.title}
@@ -22,8 +22,15 @@ block view
 						h3.panel-title When?
 					.panel-body
 						p #{event.date + " at " + event.hour}
+		
+		if (participate == false)
+			form(role='form', action="/events/#{event.id}/join", method="post" style="float: right")
+				button.btn.btn-lg.btn-success(type="submit") Join event!
+		else 
+			form(role='form', action="/events/#{event.id}/drop-out", method="post" style="float: right")
+				button.btn.btn-lg.btn-danger(type="submit") I Cannot Attend
 
-		h4 Latest comments & activity
+		h4(style='margin-top:7%') Latest comments & activity 
 
 		.list-group
 			each comment in comments

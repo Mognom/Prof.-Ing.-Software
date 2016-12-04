@@ -158,6 +158,27 @@ exports.getCommentsByEvent = function (eventID) {
     })
 };
 
+exports.getParticipateInEvent = function (eventID, userID) {
+    return all(db, 'SELECT * FROM participate WHERE eventID = $eventID AND userID = $userID', {
+        $eventID: eventID,
+        $userID: userID
+    })
+};
+
+exports.joinEvent = function (eventID, userID) {
+    return run(db, 'INSERT INTO participate (eventID, userID) VALUES ($eventID, $userID)', {
+        $eventID: eventID,
+        $userID: userID
+    })
+};
+
+exports.dropOutEvent = function (eventID, userID) {
+    return run(db, 'DELETE FROM participate WHERE eventID = $eventID AND userID = $userID', {
+        $eventID: eventID,
+        $userID: userID
+    })
+};
+
 exports.init = function (callback) {
     async.series([
         function (callback) {

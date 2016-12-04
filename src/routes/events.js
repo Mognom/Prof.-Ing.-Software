@@ -59,13 +59,16 @@ router.get('/:id(\\d+)/', passport.authenticationMiddleware(), function (req, re
     co(function* () {
         var event = yield db.getEventById(req.params.id)
         var comments = yield db.getCommentsByEvent(req.params.id)
-
+        var participate = yield db.getParticipateInEvent(req.params.id, req.user.id)
+console.log(participate);
         return {
             event: event[0],
-            comments: comments
+            comments: comments,
+            participate: ((participate.length > 0) ? true : false)
         };
     }).then((result) => {
-            res.render('event', {user: req.user, event: result.event, comments: result.comments});
+        console.log(result.participate);
+            res.render('event', {user: req.user, event: result.event, comments: result.comments, participate: result.participate});
         })
         .catch(function (err) {
             errorHandler.serverError(err, req, res, 'Error getting events');
@@ -79,6 +82,26 @@ router.post('/:id(\\d+)/addComment', passport.authenticationMiddleware(), functi
         })
         .catch(function (err) {
             errorHandler.serverError(err, req, res, 'Error creating event');
+        });
+});
+
+router.post('/:id(\\d+)/join', passport.authenticationMiddleware(), function (req, res) {
+    db.joinEvent(req.params.id, req.user.id)
+        .then(() => {
+            res.redirect('/events/' + req.params.id);
+        })
+        .catch(function (err) {
+            errorHandler.serverError(err, req, res, 'Error joining event');
+        });
+});
+
+router.post('/:id(\\d+)/drop-out', passport.authenticationMiddleware(), function (req, res) {
+    db.dropOutEvent(req.params.id, req.user.id)
+        .then(() => {
+            res.redirect('/events/' + req.params.id);
+        })
+        .catch(function (err) {
+            errorHandler.serverError(err, req, res, 'Error dropping out event');
         });
 });
 
