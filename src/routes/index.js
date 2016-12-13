@@ -9,9 +9,12 @@ const multer = require(appRootPath + '/multer.js');
 const config = require(appRootPath + '/config.js');
 const errorHandler = require(appRootPath + '/errorHandler.js');
 
-
 router.get('/', function (req, res) {
     res.render('index', { user: req.user });
+});
+
+router.get('/chat', function (req, res) {
+    res.render('chat', { user: req.user });
 });
 
 router.post('/signup', multer.imageUpload.single('image'), function (req, res) {

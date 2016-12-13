@@ -67,9 +67,14 @@ block content
 								a(href="/events/createEvent") Create event
 							| &nbsp;
 							li
+								a(href="/chat") Chat
+							| &nbsp;
+							li
 								a(href="/profile") Profile
 							| &nbsp;
 						ul.nav.navbar-nav.navbar-right
 							li
-								a(href="/logout") #{user.username} (Log out)
+								a(href="/logout")
+									div#id(style="float: left") #{user.username} 
+									div(style="float: left") (Log out)
 		block view
