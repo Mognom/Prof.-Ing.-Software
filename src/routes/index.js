@@ -82,16 +82,18 @@ router.get('/profile', passport.authenticationMiddleware(),
                 error: { status: 400 }
             });
         }
-        db.getUserByName(req.user.username).then(function (user) {
-            user.image =
-            res.render('profile', {user:user});
+
+        co(function* () {
+            var user = yield db.getUserByName(req.user.username);
+            if (!user) {
+              user = yield db.getOauthUserByName(req.user.username);
+              user.image = res.render('oauth-profile', {user:user});
+            } else {
+              user.image = res.render('profile', {user:user});
+            }
         }).catch(function (err) {
-            res.render('error', {
-                message: 'Unable to render user profile',
-                log: err,
-                error: { status: 400 }
-            });
-        })
+            errorHandler.notFoundError(err, req, res);
+        });
 });
 
 router.post('/profile', passport.authenticationMiddleware(),

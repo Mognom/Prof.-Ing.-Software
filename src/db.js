@@ -87,6 +87,12 @@ exports.getOauthUserByID = function (id) {
     })
 };
 
+exports.getOauthUserByName = function (username) {
+    return get(db, 'SELECT * FROM oauth WHERE username=$username', {
+        $username: username
+    })
+};
+
 exports.createOauthUser = function (id, username) {
     return run(db, 'INSERT INTO oauth (id, username) VALUES ($id, $username)', {
         $id: id,

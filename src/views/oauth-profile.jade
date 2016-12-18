@@ -1,0 +1,22 @@
+extends header
+
+block view
+    .container
+        if success && success.length > 0
+            .alert.alert-success.alert-dismissible.fade-in(role="alert")
+                button.close(type="button" data-dismiss="alert" aria-label="Close")
+                    span(aria-hidden="true") ×
+                p= success
+
+        .section(style="width: 30%; margin: auto;")
+            .container
+                h1 User Profile
+
+        .row
+            .col-md-3
+                img.img-responsive(src='#{user.image || "media/noimage.jpg"}')
+            .col-md-9
+                form(role='form', action="/profile", method="post", style='max-width: 300px;margin:auto', encType="multipart/form-data")
+                    .form-group
+                        label.control-label Username
+                        input.form-control(value='#{user.username}', type='text', name="username", readonly=true)
