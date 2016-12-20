@@ -12,7 +12,7 @@ io.on('connection', function(socket){
   	});
 });
 
-http.listen(8000, "127.0.0.1");
+http.listen(8000, "0.0.0.0");
 // var server = app.listen(app.get('port'), function() {
 //     debug('Express server listening on port ' + server.address().port);
 // });
